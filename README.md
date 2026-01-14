@@ -6,7 +6,6 @@ Bu repo, 60,000 TL bütçe ile işlem gücüne odaklanmış bir Intel sistem yap
 
 - **intel-system-config.txt**: Detaylı sistem bileşenleri ve özellikler (metin formatı)
 - **intel-system.ps1**: Sistem konfigürasyonunu görüntüleyen PowerShell scripti
-- **run.ps1**: Sistem dil ayarları için mevcut script
 
 ## Sistem Özellikleri
 
