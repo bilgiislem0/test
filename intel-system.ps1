@@ -72,7 +72,7 @@ foreach ($component in $SystemComponents.Keys | Sort-Object) {
     }
     
     Write-Host "  Fiyat: $($details['Fiyat']) TL" -ForegroundColor Green
-    if ($details['Link']) {
+    if ($details.ContainsKey('Link')) {
         Write-Host "  Link: $($details['Link'])" -ForegroundColor Cyan
     }
     Write-Host ""
