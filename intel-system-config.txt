@@ -1,0 +1,113 @@
+INTEL İŞLEM GÜCÜ ODAKLI SİSTEM YAPISI
+======================================
+Maksimum Bütçe: 60,000 TL
+Odak: İşlem Gücü (CPU Performance)
+
+SİSTEM BİLEŞENLERİ:
+==================
+
+1. İŞLEMCI (CPU):
+   Model: Intel Core i7-13700 (16 Çekirdek, 24 Thread)
+   Entegre Grafik: Intel UHD Graphics 770
+   Base Clock: 2.1 GHz
+   Turbo Clock: 5.2 GHz
+   Cache: 30MB Intel Smart Cache
+   TDP: 65W (Base) / 219W (Maximum Turbo)
+   Soket: LGA1700
+   Kutu İçeriği: Stock soğutucu dahil
+   Tahmini Fiyat: ~16,000-18,000 TL (Güncel fiyat için arama yapın)
+
+2. ANAKART (Motherboard):
+   Model: MSI PRO B760M-A WIFI DDR4
+   Chipset: Intel B760
+   Soket: LGA1700
+   RAM Desteği: DDR4
+   Genişletme: PCIe 4.0
+   Tahmini Fiyat: ~4,500-5,500 TL (Güncel fiyat için arama yapın)
+
+3. RAM (Bellek):
+   Model: Kingston Fury Beast 32GB (2x16GB)
+   Tip: DDR4
+   Hız: 3200MHz
+   CL: 16
+   Tahmini Fiyat: ~2,500-3,500 TL (Güncel fiyat için arama yapın)
+
+4. GÜÇ KAYNAĞI (PSU):
+   Model: Corsair CV650 650W
+   Sertifika: 80+ Bronze
+   Tip: ATX
+   Modüler: Non-Modular
+   Tahmini Fiyat: ~2,000-2,500 TL (Güncel fiyat için arama yapın)
+
+5. KASA (Case):
+   Model: Thermaltake Versa H18
+   Tip: Micro-ATX Mini Tower
+   Soğutma: 1x 120mm Fan (Ön)
+   Tahmini Fiyat: ~1,000-1,500 TL (Güncel fiyat için arama yapın)
+
+6. SİSTEM DİSKİ (OS Drive):
+   Model: Samsung 990 PRO 1TB NVMe M.2 SSD
+   Arayüz: PCIe 4.0 x4 NVMe
+   Okuma: 7450 MB/s
+   Yazma: 6900 MB/s
+   Tahmini Fiyat: ~3,800-4,800 TL (Güncel fiyat için arama yapın)
+
+TAHMİNİ MALİYET HESABI:
+======================
+NOT: Aşağıdaki fiyatlar tahminidir. Güncel fiyatlar için online mağazaları kontrol edin.
+
+İşlemci (CPU):           16,000-18,000 TL (Stock soğutucu dahil)
+Anakart:                  4,500-5,500 TL
+RAM (32GB Kingston):      2,500-3,500 TL
+Güç Kaynağı (650W):      2,000-2,500 TL
+Kasa:                     1,000-1,500 TL
+SSD (1TB Samsung 990):    3,800-4,800 TL
+                      ---------------
+TAHMİNİ TOPLAM:          29,800-36,800 TL
+
+BÜTÇE HEDEFİ: 60,000 TL içinde kalacak şekilde
+ÖNERİ: Satın almadan önce mutlaka güncel fiyatları kontrol edin!
+
+SİSTEM ÖZELLİKLERİ:
+===================
+✓ 16 Çekirdek, 24 Thread ile yüksek işlem gücü
+✓ 5.2 GHz'e kadar turbo hız
+✓ Intel UHD Graphics 770 entegre grafik (monitör çıkışı için yeterli)
+✓ 32GB DDR4 Kingston RAM (çoklu görev için yeterli)
+✓ 1TB Samsung 990 PRO ultra hızlı NVMe SSD (7450 MB/s okuma)
+✓ Stock Intel soğutucu (kutu ile birlikte gelir)
+✓ 650W güç kaynağı ile gelecek genişletmelere hazır
+
+ÖNEMLİ NOTLAR:
+==============
+- Bu sistem işlem gücüne odaklanmıştır
+- Intel Core i7-13700 entegre Intel UHD Graphics 770 ile gelir
+- Monitör çıkışı için entegre grafik kullanılabilir
+- Harici ekran kartı isteğe bağlıdır
+- Stock soğutucu normal kullanım için yeterlidir
+
+SATIN ALMA ÖNERİLERİ:
+=====================
+1. Güncel fiyatları kontrol etmek için şu sitelerde arama yapın:
+   - Hepsiburada.com
+   - Trendyol.com
+   - N11.com
+   - Vatan Bilgisayar
+   - İtopya
+   
+2. Her bileşenin model numarasını tam olarak arayın
+3. Fiyatları karşılaştırın ve en uygun olanı seçin
+4. Satıcı yorumlarını ve garanti koşullarını kontrol edin
+5. Kampanyaları takip edin - özellikle hafta sonu ve özel günlerde
+
+PERFORMANS BEKLENTİSİ:
+=====================
+- Yoğun hesaplama işlemleri
+- Video rendering ve encoding
+- 3D modelleme ve simülasyon
+- Yazılım geliştirme ve derleme
+- Sanal makine çalıştırma
+- Veri analizi ve işleme
+- Çoklu iş akışları (multitasking)
+
+Sistem kurulumu için Windows 10/11 Pro 64-bit işletim sistemi önerilir.
