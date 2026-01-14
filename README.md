@@ -11,17 +11,19 @@ Bu repo, 60,000 TL bütçe ile işlem gücüne odaklanmış bir Intel sistem yap
 
 ### Donanım Bileşenleri
 
-| Bileşen | Model | Fiyat | Link |
-|---------|-------|-------|------|
-| İşlemci | Intel Core i7-13700 (16C/24T, 5.2GHz, iGPU) | 16,800 TL | [Hepsiburada](https://www.hepsiburada.com/intel-core-i7-13700-soket-1700-30mb-onbellek-2-1-ghz-5-2-ghz-islemci-p-HBCV00003B7SLT) |
-| Anakart | MSI PRO B760M-A WIFI DDR4 | 4,800 TL | [Hepsiburada](https://www.hepsiburada.com/msi-pro-b760m-a-wifi-ddr4-soket-1700-b760-ddr4-4800mhz-oc-m-2-matx-anakart-p-HBCV00003HT1PH) |
-| RAM | Kingston Fury Beast 32GB DDR4 3200MHz | 2,900 TL | [Hepsiburada](https://www.hepsiburada.com/kingston-fury-beast-32gb-2x16gb-3200mhz-ddr4-ram-kf432c16bbk2-32-p-HBCV00000YOMHK) |
-| Güç Kaynağı | Corsair CV650 650W 80+ Bronze | 2,200 TL | [Hepsiburada](https://www.hepsiburada.com/corsair-cv650-650w-80-bronze-psu-cp-9020236-eu-p-HBCV00000JJ2YQ) |
-| Kasa | Thermaltake Versa H18 | 1,100 TL | [Hepsiburada](https://www.hepsiburada.com/thermaltake-versa-h18-usb-3-0-micro-tower-kasa-ca-1j4-00s1wn-01-p-HBV00000JHVKF) |
-| SSD | Samsung 990 PRO 1TB NVMe M.2 | 4,200 TL | [Hepsiburada](https://www.hepsiburada.com/samsung-990-pro-1tb-7450mb-6900mb-s-nvme-m-2-ssd-mz-v9p1t0bw-p-HBCV00003IY82P) |
-| **TOPLAM** | | **32,000 TL** | |
+**ÖNEMLİ:** Fiyatlar tahminidir. Güncel fiyatları lütfen online mağazalardan kontrol edin.
 
-### Kalan Bütçe: 28,000 TL
+| Bileşen | Model | Tahmini Fiyat |
+|---------|-------|---------------|
+| İşlemci | Intel Core i7-13700 (16C/24T, 5.2GHz, iGPU) | 16,000-18,000 TL |
+| Anakart | MSI PRO B760M-A WIFI DDR4 | 4,500-5,500 TL |
+| RAM | Kingston Fury Beast 32GB DDR4 3200MHz | 2,500-3,500 TL |
+| Güç Kaynağı | Corsair CV650 650W 80+ Bronze | 2,000-2,500 TL |
+| Kasa | Thermaltake Versa H18 | 1,000-1,500 TL |
+| SSD | Samsung 990 PRO 1TB NVMe M.2 | 3,800-4,800 TL |
+| **TAHMİNİ TOPLAM** | | **29,800-36,800 TL** |
+
+### Bütçe: 60,000 TL içinde kalacak şekilde
 
 ## Kullanım
 
@@ -49,9 +51,22 @@ cat intel-system-config.txt
 - ✅ 1TB Samsung 990 PRO ultra hızlı NVMe SSD (7450 MB/s)
 - ✅ Stock Intel soğutucu (kutu ile birlikte gelir)
 
-### Satın Alma
+### Satın Alma Önerileri
 
-Tüm bileşenler için Hepsiburada linkleri yukarıdaki tabloda verilmiştir. Her bir linke tıklayarak doğrudan sepete ekleyebilirsiniz.
+⚠️ **Fiyatlar hakkında:** Yukarıdaki fiyatlar tahminidir ve güncel olmayabilir.
+
+**Güncel fiyatları kontrol etmek için:**
+
+1. Aşağıdaki online mağazalarda her bileşenin model numarasını arayın:
+   - Hepsiburada.com
+   - Trendyol.com
+   - N11.com
+   - Vatan Bilgisayar
+   - İtopya
+
+2. Fiyatları karşılaştırın ve en uygun olanı seçin
+3. Satıcı yorumlarını ve garanti koşullarını kontrol edin
+4. Kampanyaları takip edin (hafta sonu ve özel günler)
 
 ## İdeal Kullanım Alanları
 
@@ -67,7 +82,18 @@ Tüm bileşenler için Hepsiburada linkleri yukarıdaki tabloda verilmiştir. He
 
 - Windows 10/11 Pro 64-bit (Önerilen)
 - Entegre grafik ile monitör çıkışı mevcuttur
-- İsteğe bağlı olarak harici GPU eklenebilir (28,000 TL kalan bütçe)
+- İsteğe bağlı olarak harici GPU eklenebilir
+
+## Model Numaraları (Arama için)
+
+Satın alma yaparken aşağıdaki model numaralarını kullanın:
+
+- **İşlemci:** Intel Core i7-13700 (Soket LGA1700)
+- **Anakart:** MSI PRO B760M-A WIFI DDR4
+- **RAM:** Kingston Fury Beast KF432C16BBK2/32 (32GB Kit)
+- **SSD:** Samsung 990 PRO 1TB (MZ-V9P1T0BW)
+- **PSU:** Corsair CV650 650W 80+ Bronze
+- **Kasa:** Thermaltake Versa H18
 
 ## Lisans
 

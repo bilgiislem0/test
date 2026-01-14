@@ -15,8 +15,7 @@ SİSTEM BİLEŞENLERİ:
    TDP: 65W (Base) / 219W (Maximum Turbo)
    Soket: LGA1700
    Kutu İçeriği: Stock soğutucu dahil
-   Fiyat: ~16,800 TL
-   Link: https://www.hepsiburada.com/intel-core-i7-13700-soket-1700-30mb-onbellek-2-1-ghz-5-2-ghz-islemci-p-HBCV00003B7SLT
+   Tahmini Fiyat: ~16,000-18,000 TL (Güncel fiyat için arama yapın)
 
 2. ANAKART (Motherboard):
    Model: MSI PRO B760M-A WIFI DDR4
@@ -24,52 +23,50 @@ SİSTEM BİLEŞENLERİ:
    Soket: LGA1700
    RAM Desteği: DDR4
    Genişletme: PCIe 4.0
-   Fiyat: ~4,800 TL
-   Link: https://www.hepsiburada.com/msi-pro-b760m-a-wifi-ddr4-soket-1700-b760-ddr4-4800mhz-oc-m-2-matx-anakart-p-HBCV00003HT1PH
+   Tahmini Fiyat: ~4,500-5,500 TL (Güncel fiyat için arama yapın)
 
 3. RAM (Bellek):
    Model: Kingston Fury Beast 32GB (2x16GB)
    Tip: DDR4
    Hız: 3200MHz
    CL: 16
-   Fiyat: ~2,900 TL
-   Link: https://www.hepsiburada.com/kingston-fury-beast-32gb-2x16gb-3200mhz-ddr4-ram-kf432c16bbk2-32-p-HBCV00000YOMHK
+   Tahmini Fiyat: ~2,500-3,500 TL (Güncel fiyat için arama yapın)
 
 4. GÜÇ KAYNAĞI (PSU):
    Model: Corsair CV650 650W
    Sertifika: 80+ Bronze
    Tip: ATX
    Modüler: Non-Modular
-   Fiyat: ~2,200 TL
-   Link: https://www.hepsiburada.com/corsair-cv650-650w-80-bronze-psu-cp-9020236-eu-p-HBCV00000JJ2YQ
+   Tahmini Fiyat: ~2,000-2,500 TL (Güncel fiyat için arama yapın)
 
 5. KASA (Case):
    Model: Thermaltake Versa H18
    Tip: Micro-ATX Mini Tower
    Soğutma: 1x 120mm Fan (Ön)
-   Fiyat: ~1,100 TL
-   Link: https://www.hepsiburada.com/thermaltake-versa-h18-usb-3-0-micro-tower-kasa-ca-1j4-00s1wn-01-p-HBV00000JHVKF
+   Tahmini Fiyat: ~1,000-1,500 TL (Güncel fiyat için arama yapın)
 
 6. SİSTEM DİSKİ (OS Drive):
    Model: Samsung 990 PRO 1TB NVMe M.2 SSD
    Arayüz: PCIe 4.0 x4 NVMe
    Okuma: 7450 MB/s
    Yazma: 6900 MB/s
-   Fiyat: ~4,200 TL
-   Link: https://www.hepsiburada.com/samsung-990-pro-1tb-7450mb-6900mb-s-nvme-m-2-ssd-mz-v9p1t0bw-p-HBCV00003IY82P
+   Tahmini Fiyat: ~3,800-4,800 TL (Güncel fiyat için arama yapın)
 
-TOPLAM MALİYET HESABI:
+TAHMİNİ MALİYET HESABI:
 ======================
-İşlemci (CPU):           16,800 TL (Stock soğutucu dahil)
-Anakart:                  4,800 TL
-RAM (32GB Kingston):      2,900 TL
-Güç Kaynağı (650W):      2,200 TL
-Kasa:                     1,100 TL
-SSD (1TB Samsung 990):    4,200 TL
-                      ---------------
-TOPLAM:                  32,000 TL
+NOT: Aşağıdaki fiyatlar tahminidir. Güncel fiyatlar için online mağazaları kontrol edin.
 
-KALAN BÜTÇE: 28,000 TL
+İşlemci (CPU):           16,000-18,000 TL (Stock soğutucu dahil)
+Anakart:                  4,500-5,500 TL
+RAM (32GB Kingston):      2,500-3,500 TL
+Güç Kaynağı (650W):      2,000-2,500 TL
+Kasa:                     1,000-1,500 TL
+SSD (1TB Samsung 990):    3,800-4,800 TL
+                      ---------------
+TAHMİNİ TOPLAM:          29,800-36,800 TL
+
+BÜTÇE HEDEFİ: 60,000 TL içinde kalacak şekilde
+ÖNERİ: Satın almadan önce mutlaka güncel fiyatları kontrol edin!
 
 SİSTEM ÖZELLİKLERİ:
 ===================
@@ -81,15 +78,27 @@ SİSTEM ÖZELLİKLERİ:
 ✓ Stock Intel soğutucu (kutu ile birlikte gelir)
 ✓ 650W güç kaynağı ile gelecek genişletmelere hazır
 
-NOT:
-====
+ÖNEMLİ NOTLAR:
+==============
 - Bu sistem işlem gücüne odaklanmıştır
 - Intel Core i7-13700 entegre Intel UHD Graphics 770 ile gelir
 - Monitör çıkışı için entegre grafik kullanılabilir
 - Harici ekran kartı isteğe bağlıdır
-- Kalan 28,000 TL bütçe ile güçlü bir ekran kartı eklenebilir
 - Stock soğutucu normal kullanım için yeterlidir
-- Tüm bileşenler için satın alma linkleri verilmiştir
+
+SATIN ALMA ÖNERİLERİ:
+=====================
+1. Güncel fiyatları kontrol etmek için şu sitelerde arama yapın:
+   - Hepsiburada.com
+   - Trendyol.com
+   - N11.com
+   - Vatan Bilgisayar
+   - İtopya
+   
+2. Her bileşenin model numarasını tam olarak arayın
+3. Fiyatları karşılaştırın ve en uygun olanı seçin
+4. Satıcı yorumlarını ve garanti koşullarını kontrol edin
+5. Kampanyaları takip edin - özellikle hafta sonu ve özel günlerde
 
 PERFORMANS BEKLENTİSİ:
 =====================
