@@ -14,38 +14,44 @@ namespace FiftyOnePlus.Model
     public sealed class Meld
     {
         public MeldType Type { get; }
-        public List<Tile> Tiles { get; }
+        public IReadOnlyList<Tile> Tiles => _tiles;
+
+        private readonly List<Tile> _tiles = new();
 
         public Meld(MeldType type, IEnumerable<Tile> tiles)
         {
             Type = type;
-            Tiles = tiles?.ToList() ?? throw new ArgumentNullException(nameof(tiles));
+            _tiles = tiles?.ToList() ?? throw new ArgumentNullException(nameof(tiles));
         }
 
-        public int TotalValue => Tiles.Sum(tile => tile.Value);
+        public int TotalValue => _tiles.Sum(tile => tile.Value);
 
         public bool IsValidSeries()
         {
-            if (Tiles.Count < 3)
+            if (Type != MeldType.Series || _tiles.Count < 3)
             {
                 return false;
             }
 
-            if (Tiles.Any(tile => tile.IsJoker))
+            var ordered = _tiles.Where(tile => !tile.IsJoker)
+                .OrderBy(tile => tile.Number)
+                .ToList();
+
+            if (!ordered.Any())
             {
                 return false;
             }
 
-            var distinctColors = Tiles.Select(tile => tile.Color).Distinct().ToList();
-            if (distinctColors.Count != 1)
+            var color = ordered.First().Color;
+            if (ordered.Any(tile => tile.Color != color))
             {
                 return false;
             }
 
-            var ordered = Tiles.Select(tile => tile.Number).OrderBy(number => number).ToList();
             for (var i = 1; i < ordered.Count; i++)
             {
-                if (ordered[i] != ordered[i - 1] + 1)
+                var expected = ordered[i - 1].Number + 1;
+                if (ordered[i].Number != expected)
                 {
                     return false;
                 }
@@ -56,18 +62,18 @@ namespace FiftyOnePlus.Model
 
         public bool IsValidPairSet()
         {
-            if (Tiles.Count < 2 || Tiles.Count % 2 != 0)
+            if (Type != MeldType.PairSet || _tiles.Count < 8 || _tiles.Count % 2 != 0)
             {
                 return false;
             }
 
-            if (Tiles.Any(tile => tile.IsJoker))
+            var pairs = _tiles.GroupBy(tile => tile.Number).ToList();
+            if (pairs.Any(group => group.Count() != 2))
             {
                 return false;
             }
 
-            var grouped = Tiles.GroupBy(tile => new { tile.Color, tile.Number }).ToList();
-            return grouped.All(group => group.Count() == 2);
+            return pairs.Count >= 4;
         }
     }
 }
