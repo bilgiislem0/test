@@ -1,0 +1,9 @@
+{
+    "name": "Kraptor CloudStream Repos",
+    "id": "kraptor.sky",
+    "description": "Kraptor123'un CloudStream eklentileri (SkyStream uyumlu)",
+    "manifestVersion": 1,
+    "repos": [
+        "https://raw.githubusercontent.com/Kraptor123/cs-kraptor/refs/heads/builds/plugins.json"
+    ]
+}
