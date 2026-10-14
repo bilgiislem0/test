@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Baskı Maliyet Hesaplayıcı - Pro</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .header { text-align: center; margin-bottom: 24px; }
+        .header h2 { color: #1a237e; font-size: 22px; margin-bottom: 4px; }
+        .header p { color: #888; font-size: 13px; }
+
+        .save-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .save-bar button {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px 6px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            transition: all 0.2s;
+        }
+        .save-bar button:hover {
+            border-color: #42a5f5;
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .save-bar button.save-main {
+            background: #e8f5e9;
+            border-color: #43a047;
+            color: #2e7d32;
+        }
+        .save-bar button.save-main:hover {
+            background: #c8e6c9;
+            border-color: #2e7d32;
+        }
+        .save-bar button.danger:hover {
+            border-color: #ef5350;
+            background: #ffebee;
+            color: #c62828;
+        }
+        .save-info {
+            text-align: center;
+            font-size: 11px;
+            color: #aaa;
+            margin-bottom: 14px;
+            min-height: 16px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 4px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            background: #fff;
+            color: #1a237e;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .input-group { margin-bottom: 14px; }
+        .input-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: #444;
+            font-size: 14px;
+        }
+        .input-group label small { font-weight: 400; color: #999; }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border 0.3s;
+            outline: none;
+        }
+        .input-group input:focus, .input-group select:focus { border-color: #42a5f5; }
+        .input-group input.input-error { border-color: #ef5350; background: #fff5f5; }
+
+        .row { display: flex; gap: 10px; }
+        .row .input-group { flex: 1; }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a237e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #e8eaf6;
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .toggle-row:last-child { border-bottom: none; }
+        .toggle-row label.toggle-label { font-size: 14px; color: #444; font-weight: 500; cursor: default; }
+        .switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; border-radius: 24px; transition: 0.3s;
+        }
+        .slider:before {
+            position: absolute; content: "";
+            height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; border-radius: 50%; transition: 0.3s;
+        }
+        .switch input:checked + .slider { background-color: #43a047; }
+        .switch input:checked + .slider:before { transform: translateX(20px); }
+
+        .toggle-section {
+            background: #f9f9fb;
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-top: 10px;
+            border: 1px solid #e8e8ee;
+        }
+        .toggle-section-title {
+            font-size: 12px; font-weight: 700; color: #1a237e;
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+        }
+
+        .calc-btn {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #43a047, #2e7d32);
+            color: white; border: none; border-radius: 10px;
+            font-size: 18px; font-weight: 700; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 16px; letter-spacing: 0.5px;
+        }
+        .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46,125,50,0.4); }
+        .calc-btn:active { transform: translateY(0); }
+
+        .validation-error {
+            background: #ffebee; border: 2px solid #ef5350; border-radius: 10px;
+            padding: 14px; margin-top: 16px; text-align: center; display: none;
+        }
+        .validation-error .ve-icon { font-size: 32px; margin-bottom: 8px; }
+        .validation-error .ve-text { font-size: 14px; color: #c62828; font-weight: 600; line-height: 1.6; }
+
+        .results { margin-top: 24px; display: none; }
+        .results-header {
+            text-align: center; font-size: 13px; color: #999;
+            margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .cost-breakdown { background: #fafafa; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+        .cost-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 7px 0; font-size: 14px; color: #555;
+        }
+        .cost-row .cost-label { display: flex; align-items: center; gap: 8px; }
+        .cost-row .cost-value { font-weight: 600; color: #333; white-space: nowrap; }
+        .cost-row.disabled .cost-label { text-decoration: line-through; color: #bbb; }
+        .cost-row.disabled .cost-value { color: #bbb; }
+        .cost-row.subtotal {
+            border-top: 2px dashed #ddd; margin-top: 6px; padding-top: 10px;
+            font-weight: 700; color: #333; font-size: 15px;
+        }
+        .cost-row.total {
+            border-top: 2px solid #1a237e; margin-top: 8px; padding-top: 12px;
+            font-weight: 800; color: #d32f2f; font-size: 17px;
+        }
+
+        .price-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 16px; }
+        .price-card {
+            text-align: center; padding: 14px 8px; border-radius: 12px; border: 2px solid #e0e0e0;
+        }
+        .price-card.min { border-color: #ffb74d; background: #fff8e1; }
+        .price-card.rec { border-color: #43a047; background: #e8f5e9; transform: scale(1.05); }
+        .price-card.max { border-color: #42a5f5; background: #e3f2fd; }
+        .price-card .card-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+        .price-card .card-multi { font-size: 12px; color: #aaa; margin: 2px 0; }
+        .price-card .card-price { font-size: 22px; font-weight: 800; }
+        .price-card.min .card-price { color: #e65100; }
+        .price-card.rec .card-price { color: #2e7d32; }
+        .price-card.max .card-price { color: #1565c0; }
+
+        .custom-price-section {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border: 2px solid #ff9800; border-radius: 12px; padding: 16px;
+        }
+        .custom-price-section h4 { font-size: 14px; color: #e65100; margin-bottom: 10px; text-align: center; }
+        .custom-price-input { display: flex; gap: 10px; align-items: center; }
+        .custom-price-input input {
+            flex: 1; padding: 12px; border: 2px solid #ff9800; border-radius: 8px;
+            font-size: 18px; font-weight: 700; text-align: center; outline: none;
+        }
+        .custom-price-input input:focus { border-color: #e65100; }
+        .custom-price-input span { font-size: 18px; font-weight: 700; color: #e65100; }
+        .custom-result { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .custom-result-item { background: #fff; border-radius: 8px; padding: 10px; text-align: center; }
+        .custom-result-item .cri-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+        .custom-result-item .cri-value { font-size: 18px; font-weight: 800; }
+        .custom-result-item .cri-value.positive { color: #2e7d32; }
+        .custom-result-item .cri-value.negative { color: #c62828; }
+        .custom-result-item .cri-value.neutral { color: #1565c0; }
+
+        .custom-verdict {
+            margin-top: 10px; text-align: center; padding: 10px;
+            border-radius: 8px; font-weight: 700; font-size: 14px;
+        }
+        .custom-verdict.ok { background: #e8f5e9; color: #2e7d32; }
+        .custom-verdict.warn { background: #fff3e0; color: #e65100; }
+        .custom-verdict.bad { background: #ffebee; color: #c62828; }
+
+        .profit-bar-container { margin-top: 20px; background: #f5f5f5; border-radius: 10px; padding: 14px; }
+        .profit-bar-container h4 { font-size: 13px; color: #555; margin-bottom: 10px; }
+        .profit-bar {
+            height: 28px; background: #e0e0e0; border-radius: 14px; overflow: hidden; position: relative;
+        }
+        .profit-bar .bar-fill {
+            height: 100%; border-radius: 14px; display: flex; align-items: center;
+            justify-content: center; font-size: 12px; font-weight: 700; color: #fff;
+            transition: width 0.5s ease; min-width: 0;
+        }
+        .profit-info { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #777; }
+
+        .warning-box {
+            margin-top: 16px; padding: 12px; background: #fff3e0;
+            border-left: 4px solid #ff9800; border-radius: 6px;
+            font-size: 13px; color: #e65100; display: none; line-height: 1.7;
+        }
+        .summary-box {
+            margin-top: 16px; padding: 14px; background: #e8eaf6;
+            border-radius: 10px; font-size: 13px; color: #333; line-height: 1.6;
+        }
+        .footer-note { text-align: center; font-size: 11px; color: #bbb; margin-top: 20px; line-height: 1.5; }
+
+        @media (max-width: 480px) {
+            .container { padding: 1.2rem; }
+            .price-cards { grid-template-columns: 1fr; }
+            .price-card.rec { transform: none; }
+            .custom-result { grid-template-columns: 1fr; }
+            .save-bar button { font-size: 11px; padding: 8px 4px; min-width: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>🖨️ 3D Baskı Maliyet Hesaplayıcı Pro</h2>
+        <p>Tüm gizli maliyetler dahil — zarar etme, kârını koru!</p>
+    </div>
+
+    <div class="save-bar">
+        <button class="save-main" onclick="kaydet()">💾 Kaydet (Ctrl+S)</button>
+        <button class="danger" onclick="ayarlariSifirla()">🗑️ Sıfırla</button>
+    </div>
+    <div class="save-info" id="saveInfo" style="color: rgb(170, 170, 170);">💡 Dosyadaki kayıtlı ayarlar yüklendi. (16.03.2026 00:34:36)</div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="sekmeGecis(this,'basic')">⚡ Temel</button>
+        <button class="tab-btn" onclick="sekmeGecis(this,'advanced')">⚙️ Gelişmiş</button>
+        <button class="tab-btn" onclick="sekmeGecis(this,'business')">💼 Satış</button>
+    </div>
+
+    <!-- TEMEL -->
+    <div class="tab-content active" id="tab-basic">
+        <div class="section-title">Filament Bilgileri</div>
+        <div class="row">
+            <div class="input-group">
+                <label>Filament Tipi</label>
+                <select id="filamentType" onchange="filamentFiyatiGuncelle()">
+                    <option value="pla">PLA</option>
+                    <option value="petg">PETG</option>
+                    <option value="abs">ABS</option>
+                    <option value="tpu">TPU</option>
+                    <option value="asa">ASA</option>
+                    <option value="pla_plus">PLA+</option>
+                    <option value="custom">Özel</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>KG Fiyatı (TL)</label>
+                <input type="number" id="filamentPrice" value="753">
+            </div>
+        </div>
+        <div class="input-group">
+            <label>Harcanan Filament (gram) <small>— Dilimleyiciden bakın</small></label>
+            <input type="number" id="grams" placeholder="Örn: 68.58" step="0.01">
+        </div>
+        <div class="section-title">Baskı Süresi</div>
+        <div class="row">
+            <div class="input-group"><label>Saat</label><input type="number" id="hours" placeholder="0" value="0" min="0"></div>
+            <div class="input-group"><label>Dakika</label><input type="number" id="minutes" placeholder="0" value="0" min="0" max="59"></div>
+        </div>
+        <div class="section-title">Son İşlem Süresi</div>
+        <div class="row">
+            <div class="input-group"><label>Hazırlık <small>(dk)</small></label><input type="number" id="prepTime" value="15" min="0"></div>
+            <div class="input-group"><label>Son İşlem <small>(dk)</small></label><input type="number" id="postTime" value="10" min="0"></div>
+        </div>
+    </div>
+
+    <!-- GELİŞMİŞ -->
+    <div class="tab-content" id="tab-advanced">
+        <div class="section-title">Elektrik Ayarları</div>
+        <div class="row">
+            <div class="input-group"><label>Elektrik Birim Fiyatı <small>(TL/kWh)</small></label><input type="number" id="elecRate" value="4.50" step="0.01"></div>
+            <div class="input-group"><label>Yazıcı Güç Tüketimi <small>(Watt)</small></label><input type="number" id="printerWatt" value="120" step="1"></div>
+        </div>
+        <div class="section-title">Makine Amortismanı</div>
+        <div class="row">
+            <div class="input-group"><label>Yazıcı Fiyatı (TL)</label><input type="number" id="printerCost" value="25000"></div>
+            <div class="input-group"><label>Tahmini Ömür <small>(saat)</small></label><input type="number" id="printerLife" value="3000"></div>
+        </div>
+        <div class="section-title">Sarf Malzemesi Amortismanı</div>
+        <div class="row">
+            <div class="input-group"><label>Nozzle Fiyatı (TL)</label><input type="number" id="nozzleCost" value="1500"></div>
+            <div class="input-group"><label>Nozzle Ömrü <small>(saat)</small></label><input type="number" id="nozzleLife" value="500"></div>
+        </div>
+        <div class="row">
+            <div class="input-group"><label>PEI Plaka Fiyatı (TL)</label><input type="number" id="peiCost" value="3500"></div>
+            <div class="input-group"><label>PEI Plaka Ömrü <small>(baskı)</small></label><input type="number" id="peiLife" value="300"></div>
+        </div>
+        <div class="section-title">Risk ve Fire Payı</div>
+        <div class="input-group"><label>Başarısız Baskı Oranı <small>(% — her X baskıdan 1'i başarısız)</small></label><input type="number" id="failRate" value="10" min="0" max="50"></div>
+        <div class="input-group"><label>Filament Fire Payı <small>(% — destek, temizleme, çerçeve)</small></label><input type="number" id="wasteRate" value="15" min="0" max="50"></div>
+    </div>
+
+    <!-- SATIŞ -->
+    <div class="tab-content" id="tab-business">
+        <div class="section-title">İşçilik</div>
+        <div class="input-group"><label>Saatlik İşçilik (TL) <small>— Sizin emeğiniz</small></label><input type="number" id="laborRate" value="200"></div>
+        <div class="section-title">Paketleme ve Kargo</div>
+        <div class="row">
+            <div class="input-group"><label>Paketleme Maliyeti (TL)</label><input type="number" id="packagingCost" value="15"></div>
+            <div class="input-group"><label>Kargo / Teslimat (TL)</label><input type="number" id="shippingCost" value="0"></div>
+        </div>
+        <div class="section-title">Tasarım Bedeli</div>
+        <div class="input-group"><label>3D Model / Tasarım Ücreti (TL) <small>— Kendiniz çizdiyseniz emeğiniz</small></label><input type="number" id="designCost" value="0"></div>
+        <div class="section-title">Vergi ve Komisyon</div>
+        <div class="row">
+            <div class="input-group"><label>Platform Komisyonu <small>(%)</small></label><input type="number" id="commissionRate" value="0" min="0" max="50"></div>
+            <div class="input-group"><label>Vergi Oranı <small>(%)</small></label><input type="number" id="taxRate" value="0" min="0" max="50"></div>
+        </div>
+        <div class="section-title">Satış Çarpanları</div>
+        <div class="row">
+            <div class="input-group"><label>Minimum (x)</label><input type="number" id="multiMin" value="2.5" step="0.1"></div>
+            <div class="input-group"><label>Önerilen (x)</label><input type="number" id="multiRec" value="3.5" step="0.1"></div>
+            <div class="input-group"><label>Premium (x)</label><input type="number" id="multiMax" value="5.0" step="0.1"></div>
+        </div>
+
+        <div class="section-title">🎛️ Fiyata Dahil Edilecek Kalemler</div>
+        <p style="font-size:12px;color:#888;margin-bottom:10px;">Her kalemi açıp kapatarak fiyata dahil edip etmeyeceğine sen karar ver.</p>
+
+        <div class="toggle-section">
+            <div class="toggle-section-title">Üretim Maliyetleri</div>
+            <div class="toggle-row"><label class="toggle-label">🧵 Hammadde (Filament)</label><label class="switch"><input type="checkbox" id="inclMaterial" checked=""><span class="slider"></span></label></div>
+            <div class="toggle-row"><label class="toggle-label">🗑️ Fire Payı (Destek/Temizleme/Çerçeve)</label><label class="switch"><input type="checkbox" id="inclWaste" checked=""><span class="slider"></span></label></div>
+            <div class="toggle-row"><label class="toggle-label">⚡ Elektrik Maliyeti</label><label class="switch"><input type="checkbox" id="inclElectricity" checked=""><span class="slider"></span></label></div>
+            <div class="toggle-row"><label class="toggle-label">⚠️ Başarısız Baskı Riski</label><label class="switch"><input type="checkbox" id="inclFailRisk" checked=""><span class="slider"></span></label></div>
+        </div>
+        <div class="toggle-section">
+            <div class="toggle-section-title">Makine ve Sarf Malzeme</div>
+            <div class="toggle-row"><label class="toggle-label">🖨️ Makine Amortismanı</label><label class="switch"><input type="checkbox" id="inclPrinterWear" checked=""><span class="slider"></span></label></div>
+            <div class="toggle-row"><label class="toggle-label">🔩 Nozzle Yıpranması</label><label class="switch"><input type="checkbox" id="inclNozzle" checked=""><span class="slider"></span></label></div>
+            <div class="toggle-row"><label class="toggle-label">🛏️ PEI Plaka Yıpranması</label><label class="switch"><input type="checkbox" id="inclPei" checked=""><span class="slider"></span></label></div>
+        </div>
+        <div class="toggle-section">
+            <div class="toggle-section-title">İşçilik ve Emek</div>
+            <div class="toggle-row"><label class="toggle-label">👷 İşçilik (Hazırlık + Son İşlem)</label><label class="switch"><input type="checkbox" id="inclLabor" checked=""><span class="slider"></span></label></div>
+            <div class="toggle-row"><label class="toggle-label">🎨 Tasarım Bedeli</label><label class="switch"><input type="checkbox" id="inclDesign"><span class="slider"></span></label></div>
+        </div>
+        <div class="toggle-section">
+            <div class="toggle-section-title">Lojistik</div>
+            <div class="toggle-row"><label class="toggle-label">📦 Paketleme Maliyeti</label><label class="switch"><input type="checkbox" id="inclPackaging" checked=""><span class="slider"></span></label></div>
+            <div class="toggle-row"><label class="toggle-label">🚚 Kargo / Teslimat</label><label class="switch"><input type="checkbox" id="inclShipping"><span class="slider"></span></label></div>
+        </div>
+        <div class="toggle-section">
+            <div class="toggle-section-title">Vergi ve Kesintiler</div>
+            <div class="toggle-row"><label class="toggle-label">🏛️ Vergi</label><label class="switch"><input type="checkbox" id="inclTax"><span class="slider"></span></label></div>
+            <div class="toggle-row"><label class="toggle-label">💳 Platform Komisyonu</label><label class="switch"><input type="checkbox" id="inclCommission"><span class="slider"></span></label></div>
+        </div>
+    </div>
+
+    <button class="calc-btn" onclick="maliyetHesapla()">💰 MALİYET HESAPLA</button>
+
+    <div class="validation-error" id="validationError" style="display: none;">
+        <div class="ve-icon">🚫</div>
+        <div class="ve-text" id="validationText"></div>
+    </div>
+
+    <div class="results" id="resultSection" style="display: block;">
+        <div class="results-header">📊 Detaylı Maliyet Dökümü</div>
+        <div class="cost-breakdown">
+            <div class="cost-row" id="rowMaterial"><span class="cost-label">🧵 Hammadde (Filament)</span><span class="cost-value" id="resMaterial">2,26 TL</span></div>
+            <div class="cost-row" id="rowWaste"><span class="cost-label">🗑️ Fire Payı (Destek/Temizleme)</span><span class="cost-value" id="resWaste">0,34 TL</span></div>
+            <div class="cost-row" id="rowElec"><span class="cost-label">⚡ Elektrik</span><span class="cost-value" id="resElec">0,27 TL</span></div>
+            <div class="cost-row" id="rowPrinterWear"><span class="cost-label">🖨️ Makine Amortismanı</span><span class="cost-value" id="resPrinterWear">4,17 TL</span></div>
+            <div class="cost-row" id="rowNozzle"><span class="cost-label">🔩 Nozzle Yıpranması</span><span class="cost-value" id="resNozzle">1,50 TL</span></div>
+            <div class="cost-row" id="rowPei"><span class="cost-label">🛏️ PEI Plaka Yıpranması</span><span class="cost-value" id="resPei">11,67 TL</span></div>
+            <div class="cost-row" id="rowFailRisk"><span class="cost-label">⚠️ Başarısız Baskı Riski</span><span class="cost-value" id="resFailRisk">2,02 TL</span></div>
+            <div class="cost-row subtotal"><span class="cost-label">ÜRETİM MALİYETİ</span><span class="cost-value" id="resProductionTotal">22,22 TL</span></div>
+            <div class="cost-row disabled" id="rowLabor" style="margin-top:8px"><span class="cost-label">👷 İşçilik (Hazırlık + Son İşlem)</span><span class="cost-value" id="resLabor">83,33 TL</span></div>
+            <div class="cost-row disabled" id="rowDesign"><span class="cost-label">🎨 Tasarım Bedeli</span><span class="cost-value" id="resDesign">0,00 TL</span></div>
+            <div class="cost-row disabled" id="rowPackaging"><span class="cost-label">📦 Paketleme</span><span class="cost-value" id="resPackaging">15,00 TL</span></div>
+            <div class="cost-row disabled" id="rowShipping"><span class="cost-label">🚚 Kargo</span><span class="cost-value" id="resShipping">0,00 TL</span></div>
+            <div class="cost-row disabled" id="rowTax"><span class="cost-label">🏛️ Vergi</span><span class="cost-value" id="resTax">0,00 TL</span></div>
+            <div class="cost-row disabled" id="rowCommission"><span class="cost-label">💳 Platform Komisyonu</span><span class="cost-value" id="resCommission">0,00 TL</span></div>
+            <div class="cost-row total"><span class="cost-label">💰 TOPLAM MALİYET</span><span class="cost-value" id="resTotal">22,22 TL</span></div>
+        </div>
+
+        <div class="price-cards">
+            <div class="price-card min"><div class="card-label">Minimum</div><div class="card-multi" id="lblMultiMin">x2,5</div><div class="card-price" id="resPriceMin">56 TL</div></div>
+            <div class="price-card rec"><div class="card-label">✅ Önerilen</div><div class="card-multi" id="lblMultiRec">x3,5</div><div class="card-price" id="resPriceRec">78 TL</div></div>
+            <div class="price-card max"><div class="card-label">Premium</div><div class="card-multi" id="lblMultiMax">x5</div><div class="card-price" id="resPriceMax">112 TL</div></div>
+        </div>
+
+        <div class="custom-price-section">
+            <h4>🏷️ Kendi Satış Fiyatını Belirle</h4>
+            <div class="custom-price-input">
+                <input type="number" id="customPrice" placeholder="Fiyatınızı yazın..." oninput="kendiFiyatGuncelle()">
+                <span>TL</span>
+            </div>
+            <div class="custom-result" id="customResult" style="display:none;">
+                <div class="custom-result-item"><div class="cri-label">Net Kâr</div><div class="cri-value" id="customProfit">0 TL</div></div>
+                <div class="custom-result-item"><div class="cri-label">Kâr Marjı</div><div class="cri-value" id="customMargin">%0</div></div>
+                <div class="custom-result-item"><div class="cri-label">Çarpan</div><div class="cri-value neutral" id="customMultiplier">x0</div></div>
+                <div class="custom-result-item"><div class="cri-label">Gram Başı Kazanç</div><div class="cri-value neutral" id="customPerGram">0 TL/g</div></div>
+            </div>
+            <div class="custom-verdict" id="customVerdict" style="display:none;"></div>
+            <div class="profit-bar-container" id="customProfitBarContainer" style="margin-top:12px;display:none;background:#fff;">
+                <h4>📈 Kendi Fiyatına Göre Kâr Marjı</h4>
+                <div class="profit-bar"><div class="bar-fill" id="customProfitBarFill" style="width:0%;">%0</div></div>
+                <div class="profit-info"><span>Maliyet: <strong id="customBarCost">0 TL</strong></span><span>Kâr: <strong id="customBarProfit">0 TL</strong></span></div>
+            </div>
+        </div>
+
+        <div class="profit-bar-container">
+            <h4>📈 Kâr Marjı (Önerilen Fiyat)</h4>
+            <div class="profit-bar"><div class="bar-fill" id="profitBarFill" style="width: 72%; background: linear-gradient(90deg, rgb(67, 160, 71), rgb(102, 187, 106));">%71.5</div></div>
+            <div class="profit-info"><span>Maliyet: <strong id="profitCost">22,22 TL</strong></span><span>Kâr: <strong id="profitAmount">55,78 TL</strong></span></div>
+        </div>
+
+        <div class="warning-box" id="warningBox" style="display: block;">ℹ️ Kapatılan kalemler: İşçilik — fiyata dahil edilmedi!</div>
+        <div class="summary-box" id="summaryBox"><strong>📋 Özet:</strong> 3g <strong>PLA</strong> filament ile <strong>0 saat 30 dakika</strong> süren baskı. Toplam maliyet <strong>22,22 TL</strong>. Önerilen satış fiyatı <strong>78 TL</strong> (kâr marjı: %71.5). Başarısız baskı riski: +2,02 TL.</div>
+    </div>
+
+    <div class="footer-note">
+        Isparta / Akdeniz Elektrik tarifesi baz alınmıştır.<br>
+        Bambu Lab A1 varsayılan güç tüketimi: 120W<br>
+        <strong>Bu hesaplayıcı tavsiye niteliğindedir.</strong>
+    </div>
+</div>
+
+<!--AYARLAR_BASLANGIC-->
+<script id="kayitliAyarlar" type="application/json">{"filamentType":"pla","filamentPrice":"753","grams":"","hours":"0","minutes":"0","prepTime":"15","postTime":"10","elecRate":"4.50","printerWatt":"120","printerCost":"25000","printerLife":"3000","nozzleCost":"1500","nozzleLife":"500","peiCost":"3500","peiLife":"300","failRate":"10","wasteRate":"15","laborRate":"200","packagingCost":"15","shippingCost":"0","designCost":"0","commissionRate":"0","taxRate":"0","multiMin":"2.5","multiRec":"3.5","multiMax":"5.0","inclMaterial":true,"inclWaste":true,"inclElectricity":true,"inclFailRisk":true,"inclPrinterWear":true,"inclNozzle":true,"inclPei":true,"inclLabor":false,"inclDesign":false,"inclPackaging":false,"inclShipping":false,"inclTax":false,"inclCommission":false,"_kayitTarihi":"16.03.2026 00:36:12"}</script>
+<!--AYARLAR_BITIS-->
+
+<script>
+    // ==================== PARA BİÇİMLENDİRME ====================
+    function formatTL(s) { return s.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})+" TL"; }
+    function formatTLTam(s) { return s.toLocaleString('tr-TR')+" TL"; }
+
+    // ==================== FİLAMENT ====================
+    var filamentOnTanimlar = { pla:753, petg:850, abs:800, tpu:1100, asa:950, pla_plus:850, custom:753 };
+    function filamentFiyatiGuncelle() {
+        var t = document.getElementById('filamentType').value;
+        if (t !== 'custom') document.getElementById('filamentPrice').value = filamentOnTanimlar[t];
+    }
+
+    // ==================== SEKME ====================
+    function sekmeGecis(b, s) {
+        document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+        document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+        document.getElementById('tab-'+s).classList.add('active');
+        b.classList.add('active');
+    }
+
+    // ==================== ALAN TANIMLARI ====================
+    var inputAlanlari = [
+        'filamentType','filamentPrice','grams','hours','minutes','prepTime','postTime',
+        'elecRate','printerWatt','printerCost','printerLife',
+        'nozzleCost','nozzleLife','peiCost','peiLife','failRate','wasteRate',
+        'laborRate','packagingCost','shippingCost','designCost',
+        'commissionRate','taxRate','multiMin','multiRec','multiMax'
+    ];
+    var toggleAlanlari = [
+        'inclMaterial','inclWaste','inclElectricity','inclFailRisk',
+        'inclPrinterWear','inclNozzle','inclPei',
+        'inclLabor','inclDesign','inclPackaging','inclShipping','inclTax','inclCommission'
+    ];
+
+    function ayarlariTopla() {
+        var v = {};
+        inputAlanlari.forEach(function(id){ var e=document.getElementById(id); if(e) v[id]=e.value; });
+        toggleAlanlari.forEach(function(id){ var e=document.getElementById(id); if(e) v[id]=e.checked; });
+        v._kayitTarihi = new Date().toLocaleString('tr-TR');
+        return v;
+    }
+    function ayarlariUygula(v) {
+        inputAlanlari.forEach(function(id){ var e=document.getElementById(id); if(e && v[id]!==undefined) e.value=v[id]; });
+        toggleAlanlari.forEach(function(id){ var e=document.getElementById(id); if(e && v[id]!==undefined) e.checked=v[id]; });
+    }
+
+    function bilgiGoster(m, r) {
+        var b = document.getElementById('saveInfo');
+        b.innerText = m; b.style.color = r;
+        setTimeout(function(){ b.style.color='#aaa'; }, 4000);
+    }
+
+    // ==================== DOSYA ÜSTÜNE KAYDETME (File System Access API) ====================
+    var dosyaTutamagi = null; // İlk kayıtta seçilen dosyayı hatırlar
+
+    async function kaydet() {
+        var veri = ayarlariTopla();
+
+        // HTML'i oluştur
+        var html = document.documentElement.outerHTML;
+        var yeniBlok = '<!--AYARLAR_BASLANGIC-->\n<script id="kayitliAyarlar" type="application/json">' +
+            JSON.stringify(veri) + '<\/script>\n<!--AYARLAR_BITIS-->';
+        html = html.replace(/<!--AYARLAR_BASLANGIC-->[\s\S]*?<!--AYARLAR_BITIS-->/, yeniBlok);
+        html = '<!DOCTYPE html>\n' + html;
+
+        // localStorage'a da yedekle
+        localStorage.setItem('3dHesaplayiciAyarlar', JSON.stringify(veri));
+
+        // File System Access API destekli mi?
+        if (window.showSaveFilePicker) {
+            try {
+                // İlk kez kaydetme → dosya seçtir, sonraki seferlerde aynı dosyaya yaz
+                if (!dosyaTutamagi) {
+                    dosyaTutamagi = await window.showSaveFilePicker({
+                        suggestedName: 'hesaplayici.html',
+                        types: [{
+                            description: 'HTML Dosyası',
+                            accept: { 'text/html': ['.html'] }
+                        }]
+                    });
+                }
+
+                var yazici = await dosyaTutamagi.createWritable();
+                await yazici.write(html);
+                await yazici.close();
+
+                bilgiGoster('✅ Dosya üzerine kaydedildi! (' + veri._kayitTarihi + ')', '#2e7d32');
+
+            } catch (hata) {
+                if (hata.name === 'AbortError') {
+                    bilgiGoster('İptal edildi.', '#888');
+                } else {
+                    // API hatası → eski yönteme düş
+                    eskiYontemKaydet(html, veri);
+                }
+            }
+        } else {
+            // Safari, Firefox, eski tarayıcılar → indirme yöntemi
+            eskiYontemKaydet(html, veri);
+        }
+    }
+
+    function eskiYontemKaydet(html, veri) {
+        var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = 'hesaplayici.html';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        bilgiGoster('💾 Dosya indirildi! Eski dosyanın üzerine kopyalayın. (' + veri._kayitTarihi + ')', '#e65100');
+    }
+
+    // Ctrl+S kısayolu
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            kaydet();
+        }
+    });
+
+    // Sıfırla
+    function ayarlariSifirla() {
+        if (confirm('Tüm ayarlar varsayılana dönecek. Emin misiniz?')) {
+            localStorage.removeItem('3dHesaplayiciAyarlar');
+            dosyaTutamagi = null;
+            location.reload();
+        }
+    }
+
+    // ==================== SAYFA AÇILIŞI ====================
+    window.addEventListener('load', function() {
+        var gomuluVeri = null;
+        var gomulu = document.getElementById('kayitliAyarlar');
+        if (gomulu) { try { gomuluVeri = JSON.parse(gomulu.textContent); } catch(e) {} }
+
+        var yerelVeri = null;
+        var yerelKayit = localStorage.getItem('3dHesaplayiciAyarlar');
+        if (yerelKayit) { try { yerelVeri = JSON.parse(yerelKayit); } catch(e) {} }
+
+        if (gomuluVeri && yerelVeri) {
+            var gt = new Date(gomuluVeri._kayitTarihi || 0).getTime() || 0;
+            var yt = new Date(yerelVeri._kayitTarihi || 0).getTime() || 0;
+            if (yt > gt) {
+                ayarlariUygula(yerelVeri);
+                bilgiGoster('💡 Tarayıcıdaki güncel ayarlar yüklendi. (' + yerelVeri._kayitTarihi + ')', '#888');
+            } else {
+                ayarlariUygula(gomuluVeri);
+                localStorage.setItem('3dHesaplayiciAyarlar', JSON.stringify(gomuluVeri));
+                bilgiGoster('💡 Dosyadaki kayıtlı ayarlar yüklendi. (' + gomuluVeri._kayitTarihi + ')', '#2e7d32');
+            }
+        } else if (gomuluVeri) {
+            ayarlariUygula(gomuluVeri);
+            localStorage.setItem('3dHesaplayiciAyarlar', JSON.stringify(gomuluVeri));
+            bilgiGoster('💡 Dosyadaki ayarlar yüklendi. (' + gomuluVeri._kayitTarihi + ')', '#2e7d32');
+        } else if (yerelVeri) {
+            ayarlariUygula(yerelVeri);
+            bilgiGoster('💡 Önceki ayarlar yüklendi. (' + yerelVeri._kayitTarihi + ')', '#888');
+        }
+    });
+
+    // ==================== YARDIMCI ====================
+    function degerAl(id, v) { if(v===undefined) v=0; return parseFloat(document.getElementById(id).value)||v; }
+    function acikMi(id) { return document.getElementById(id).checked; }
+
+    var sonToplamMaliyet = 0;
+    var sonGram = 0;
+
+    function satirAyarla(sid, aktif, did, tutar) {
+        var s = document.getElementById(sid);
+        document.getElementById(did).innerText = formatTL(tutar);
+        if(aktif) s.classList.remove('disabled'); else s.classList.add('disabled');
+        return aktif ? tutar : 0;
+    }
+
+    function karBariGuncelle(bid, maliyet, fiyat) {
+        var kar = fiyat - maliyet;
+        var yuzde = fiyat > 0 ? ((kar/fiyat)*100) : 0;
+        var bar = document.getElementById(bid);
+        var gy = Math.max(0, Math.min(yuzde, 100));
+        bar.style.width = gy.toFixed(0)+"%";
+        bar.innerText = "%"+yuzde.toFixed(1);
+        if(yuzde > 60) bar.style.background="linear-gradient(90deg,#43a047,#66bb6a)";
+        else if(yuzde > 30) bar.style.background="linear-gradient(90deg,#ff9800,#ffb74d)";
+        else if(yuzde > 0) bar.style.background="linear-gradient(90deg,#f44336,#ef5350)";
+        else { bar.style.width="100%"; bar.style.background="linear-gradient(90deg,#880e4f,#c62828)"; bar.innerText="ZARAR: %"+yuzde.toFixed(1); }
+        return { kar:kar, yuzde:yuzde };
+    }
+
+    // ==================== DOĞRULAMA ====================
+    function dogrula() {
+        var g=degerAl('grams'), s=degerAl('hours'), d=degerAl('minutes');
+        var sure=s+(d/60);
+        var hatalar=[], alanlar=[];
+        if(g<=0){ hatalar.push("Harcanan filament gramajını girin."); alanlar.push('grams'); }
+        if(sure<=0){ hatalar.push("Baskı süresini girin (en az 1 dakika)."); alanlar.push('hours'); alanlar.push('minutes'); }
+        ['grams','hours','minutes'].forEach(function(id){ document.getElementById(id).classList.remove('input-error'); });
+        alanlar.forEach(function(id){ document.getElementById(id).classList.add('input-error'); });
+        if(hatalar.length > 0) {
+            document.getElementById('validationText').innerHTML = hatalar.join("<br>");
+            document.getElementById('validationError').style.display = 'block';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('validationError').scrollIntoView({behavior:'smooth'});
+            return false;
+        }
+        document.getElementById('validationError').style.display = 'none';
+        return true;
+    }
+
+    // ==================== ANA HESAPLAMA ====================
+    function maliyetHesapla() {
+        if(!dogrula()) return;
+
+        var fkg=degerAl('filamentPrice'), gram=degerAl('grams');
+        var saat=degerAl('hours'), dk=degerAl('minutes');
+        var hazDk=degerAl('prepTime'), siDk=degerAl('postTime');
+        var eBirim=degerAl('elecRate',4.5), yWatt=degerAl('printerWatt',120);
+        var yFiyat=degerAl('printerCost',25000), yOmur=degerAl('printerLife',3000);
+        var nFiyat=degerAl('nozzleCost',1500), nOmur=degerAl('nozzleLife',500);
+        var pFiyat=degerAl('peiCost',3500), pOmur=degerAl('peiLife',300);
+        var failO=degerAl('failRate',10), fireO=degerAl('wasteRate',15);
+        var iSaat=degerAl('laborRate',200), pakT=degerAl('packagingCost',15);
+        var kargoT=degerAl('shippingCost',0), tasT=degerAl('designCost',0);
+        var komO=degerAl('commissionRate',0), verO=degerAl('taxRate',0);
+        var cMin=degerAl('multiMin',2.5), cOne=degerAl('multiRec',3.5), cMax=degerAl('multiMax',5);
+
+        var bSure = saat+(dk/60);
+        var iSure = (hazDk+siDk)/60;
+
+        var hamM=(gram/1000)*fkg;
+        var fireM=hamM*(fireO/100);
+        var elekM=(bSure*(yWatt/1000))*eBirim;
+        var makM=yOmur>0?((yFiyat/yOmur)*bSure):0;
+        var nozM=nOmur>0?((nFiyat/nOmur)*bSure):0;
+        var peiM=pOmur>0?(pFiyat/pOmur):0;
+
+        var onceki=hamM+fireM+elekM+makM+nozM+peiM;
+        var failM=onceki*(failO/100);
+        var iscM=iSure*iSaat;
+
+        var top=0;
+        top+=satirAyarla('rowMaterial',acikMi('inclMaterial'),'resMaterial',hamM);
+        top+=satirAyarla('rowWaste',acikMi('inclWaste'),'resWaste',fireM);
+        top+=satirAyarla('rowElec',acikMi('inclElectricity'),'resElec',elekM);
+        top+=satirAyarla('rowPrinterWear',acikMi('inclPrinterWear'),'resPrinterWear',makM);
+        top+=satirAyarla('rowNozzle',acikMi('inclNozzle'),'resNozzle',nozM);
+        top+=satirAyarla('rowPei',acikMi('inclPei'),'resPei',peiM);
+        top+=satirAyarla('rowFailRisk',acikMi('inclFailRisk'),'resFailRisk',failM);
+
+        document.getElementById('resProductionTotal').innerText=formatTL(top);
+        var uTop=top;
+
+        top+=satirAyarla('rowLabor',acikMi('inclLabor'),'resLabor',iscM);
+        top+=satirAyarla('rowDesign',acikMi('inclDesign'),'resDesign',tasT);
+        top+=satirAyarla('rowPackaging',acikMi('inclPackaging'),'resPackaging',pakT);
+        top+=satirAyarla('rowShipping',acikMi('inclShipping'),'resShipping',kargoT);
+
+        var vergiT=top*(verO/100), komT=top*(komO/100);
+        top+=satirAyarla('rowTax',acikMi('inclTax'),'resTax',vergiT);
+        top+=satirAyarla('rowCommission',acikMi('inclCommission'),'resCommission',komT);
+
+        document.getElementById('resTotal').innerText=formatTL(top);
+        sonToplamMaliyet=top; sonGram=gram;
+
+        var fMin=Math.ceil(top*cMin), fOne=Math.ceil(top*cOne), fMax=Math.ceil(top*cMax);
+        document.getElementById('lblMultiMin').innerText="x"+cMin.toLocaleString('tr-TR');
+        document.getElementById('lblMultiRec').innerText="x"+cOne.toLocaleString('tr-TR');
+        document.getElementById('lblMultiMax').innerText="x"+cMax.toLocaleString('tr-TR');
+        document.getElementById('resPriceMin').innerText=formatTLTam(fMin);
+        document.getElementById('resPriceRec').innerText=formatTLTam(fOne);
+        document.getElementById('resPriceMax').innerText=formatTLTam(fMax);
+
+        var oS=karBariGuncelle('profitBarFill',top,fOne);
+        document.getElementById('profitCost').innerText=formatTL(top);
+        document.getElementById('profitAmount').innerText=formatTL(oS.kar);
+
+        kendiFiyatGuncelle();
+
+        // Uyarılar
+        var uk=document.getElementById('warningBox'), uy=[];
+        if(top>0&&fOne<50) uy.push("💡 Satış fiyatı çok düşük, müşteri algısı olumsuz olabilir.");
+        if(failO>25) uy.push("🔴 Başarısız baskı oranınız çok yüksek! Kalibrasyonu kontrol edin.");
+        if(hamM>top*0.7&&top>0) uy.push("💡 Maliyetin %70'inden fazlası filament. Toptan alım düşünün.");
+        var kp=[];
+        if(!acikMi('inclMaterial'))kp.push("Hammadde");
+        if(!acikMi('inclWaste'))kp.push("Fire Payı");
+        if(!acikMi('inclElectricity'))kp.push("Elektrik");
+        if(!acikMi('inclPrinterWear'))kp.push("Makine Amortismanı");
+        if(!acikMi('inclNozzle'))kp.push("Nozzle");
+        if(!acikMi('inclPei'))kp.push("PEI Plaka");
+        if(!acikMi('inclFailRisk'))kp.push("Başarısız Baskı Riski");
+        if(!acikMi('inclLabor'))kp.push("İşçilik");
+        if(kp.length>0) uy.push("ℹ️ Kapatılan kalemler: "+kp.join(", ")+" — fiyata dahil edilmedi!");
+        if(uy.length>0){uk.innerHTML=uy.join("<br>");uk.style.display="block";}else{uk.style.display="none";}
+
+        var ft=document.getElementById('filamentType');
+        var ta=ft.options[ft.selectedIndex].text;
+        document.getElementById('summaryBox').innerHTML=
+            "<strong>📋 Özet:</strong> "+gram+"g <strong>"+ta+"</strong> filament ile "+
+            "<strong>"+saat+" saat "+dk+" dakika</strong> süren baskı. "+
+            "Toplam maliyet <strong>"+formatTL(top)+"</strong>. "+
+            "Önerilen satış fiyatı <strong>"+formatTLTam(fOne)+"</strong> "+
+            "(kâr marjı: %"+oS.yuzde.toFixed(1)+")."+
+            (acikMi('inclLabor')&&iscM>0?" İşçilik: "+formatTL(iscM)+".":"")+
+            (acikMi('inclFailRisk')&&failM>0?" Başarısız baskı riski: +"+formatTL(failM)+".":"");
+
+        document.getElementById('resultSection').style.display='block';
+        document.getElementById('resultSection').scrollIntoView({behavior:'smooth'});
+    }
+
+    // ==================== KENDİ FİYATIM ====================
+    function kendiFiyatGuncelle() {
+        var kf=parseFloat(document.getElementById('customPrice').value);
+        var sa=document.getElementById('customResult');
+        var ka=document.getElementById('customVerdict');
+        var ba=document.getElementById('customProfitBarContainer');
+        if(!kf||kf<=0||sonToplamMaliyet<=0){sa.style.display='none';ka.style.display='none';ba.style.display='none';return;}
+        sa.style.display='grid';ka.style.display='block';ba.style.display='block';
+
+        var nk=kf-sonToplamMaliyet;
+        var ky=(nk/kf)*100;
+        var cp=kf/sonToplamMaliyet;
+        var gbk=sonGram>0?(nk/sonGram):0;
+
+        var ke=document.getElementById('customProfit');
+        ke.innerText=formatTL(nk);ke.className='cri-value '+(nk>=0?'positive':'negative');
+        var me=document.getElementById('customMargin');
+        me.innerText="%"+ky.toFixed(1);me.className='cri-value '+(ky>=50?'positive':(ky>=0?'neutral':'negative'));
+        document.getElementById('customMultiplier').innerText="x"+cp.toFixed(2).replace('.',',');
+        var ge=document.getElementById('customPerGram');
+        ge.innerText=gbk.toFixed(2).replace('.',',')+' TL/g';ge.className='cri-value '+(gbk>=0?'positive':'negative');
+
+        karBariGuncelle('customProfitBarFill',sonToplamMaliyet,kf);
+        document.getElementById('customBarCost').innerText=formatTL(sonToplamMaliyet);
+        document.getElementById('customBarProfit').innerText=formatTL(nk);
+
+        if(nk<0){ka.className='custom-verdict bad';ka.innerHTML="🚫 ZARAR EDİYORSUN! Bu fiyatla <strong>"+formatTL(Math.abs(nk))+"</strong> zarar edersin.";}
+        else if(cp<2){ka.className='custom-verdict warn';ka.innerHTML="⚠️ Fiyat çok düşük! Emeğini karşılamıyor. En az x2 çarpan önerilir.";}
+        else if(cp<3){ka.className='custom-verdict warn';ka.innerHTML="💡 İdare eder ama kâr marjı düşük. Toplu siparişler için uygun olabilir.";}
+        else if(cp<5){ka.className='custom-verdict ok';ka.innerHTML="✅ Güzel fiyat! Hem maliyetini karşılıyorsun hem de makul kâr ediyorsun.";}
+        else{ka.className='custom-verdict ok';ka.innerHTML="🌟 Premium fiyat! Özel/detaylı işler için uygun. Müşteri memnunsa devam!";}
+    }
+</script>
+
+
+</body></html>
